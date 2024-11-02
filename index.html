@@ -19,13 +19,19 @@
       height: 50%;
       font-size: xx-large;
     }
+
+    .nonStart {
+      display: none;
+    }
   </style>
 </head>
 
 <body>
   <div id="mainDiv">
-    <button onclick="reset()">Reset</button>
-    <button onclick="increment()">Shoot</button>
+    <div id="reloadingText" style="font-size:xx-large;display:none">Reloading!!</div>
+    <button id="startBtn">Start</button>
+    <button class="nonStart" onclick="increment()">!!!Shoot!!!!</button>
+    <button class="nonStart" onclick="reset()">Reset</button>
   </div>
   <script src="index.js"></script>
 </body>
