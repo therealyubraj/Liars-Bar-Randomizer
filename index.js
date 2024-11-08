@@ -32,6 +32,7 @@ document.getElementById("randomCard").onclick = () => {
 const shotAudio = new Audio("shot.mp3");
 const reloadingAudio = new Audio("reloading.mp3");
 const emptyShotAudio = new Audio("empty_shot.mp3");
+const dhukdhukAudio = new Audio("dhukdhuk.mp3");
 
 const cards = ["A", "K", "Q"];
 const changeBulletCount = () => {
@@ -57,6 +58,10 @@ const reset = () => {
 };
 
 const increment = () => {
+  dhukdhukAudio.play();
+  setTimeout(() => _increment(), 3500);
+};
+const _increment = () => {
   if (bulletNumber === currentBullet) {
     return;
   }
