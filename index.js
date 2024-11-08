@@ -13,8 +13,6 @@ window.onload = () => {
 
 document.getElementById("startBtn").onclick = async () => {
   reloadingAudio.play();
-  document.getElementById("random").innerHTML =
-    cards[Math.floor(Math.random() * cards.length)];
   document.getElementById("startBtn").style.display = "none";
   setTimeout(() => {
     for (const btn of document.getElementsByClassName("nonStart")) {
@@ -24,8 +22,11 @@ document.getElementById("startBtn").onclick = async () => {
 };
 
 document.getElementById("randomCard").onclick = () => {
-  document.getElementById("random").innerHTML =
-    cards[Math.floor(Math.random() * cards.length)];
+  document.getElementById("random").innerHTML = "0_o";
+  setTimeout(() => {
+    document.getElementById("random").innerHTML =
+      cards[Math.floor(Math.random() * cards.length)];
+  }, 500);
 };
 
 const shotAudio = new Audio("shot.mp3");
@@ -38,8 +39,6 @@ const changeBulletCount = () => {
 };
 
 const reset = () => {
-  document.getElementById("random").innerHTML =
-    cards[Math.floor(Math.random() * cards.length)];
   reloadingAudio.play();
   bulletNumber = randomInRange(1, 6);
   currentBullet = 0;
