@@ -13,6 +13,8 @@ window.onload = () => {
 
 document.getElementById("startBtn").onclick = async () => {
   reloadingAudio.play();
+  document.getElementById("random").innerHTML =
+    cards[Math.floor(Math.random() * cards.length)];
   document.getElementById("startBtn").style.display = "none";
   setTimeout(() => {
     for (const btn of document.getElementsByClassName("nonStart")) {
@@ -25,7 +27,10 @@ const shotAudio = new Audio("shot.mp3");
 const reloadingAudio = new Audio("reloading.mp3");
 const emptyShotAudio = new Audio("empty_shot.mp3");
 
+const cards = ["A", "K", "Q"];
 const reset = () => {
+  document.getElementById("random").innerHTML =
+    cards[Math.floor(Math.random() * cards.length)];
   reloadingAudio.play();
   bulletNumber = randomInRange(1, 6);
   currentBullet = 0;
