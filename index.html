@@ -29,7 +29,11 @@
 <body>
   <div id="mainDiv">
     <div id="reloadingText" style="font-size:xx-large;display:none">Reloading!!</div>
-    <div id="random" style="font-size:35px">NOT SET</div>
+    <div style="display: flex;gap: 10px">
+      <div id="random" style="font-size:35px">NOT SET</div>
+      <button id="randomCard" style="height:100%">ANOTHER ONE</button>
+      <div id="bulletCount" style="font-size:35px"> 0 / 6</div>
+    </div>
     <button id="startBtn">Start</button>
     <button class="nonStart" onclick="increment()">!!!Shoot!!!!</button>
     <button class="nonStart" onclick="reset()">Reset</button>

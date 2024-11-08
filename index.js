@@ -23,11 +23,20 @@ document.getElementById("startBtn").onclick = async () => {
   }, 2000); // waiting for the audio to finish
 };
 
+document.getElementById("randomCard").onclick = () => {
+  document.getElementById("random").innerHTML =
+    cards[Math.floor(Math.random() * cards.length)];
+};
+
 const shotAudio = new Audio("shot.mp3");
 const reloadingAudio = new Audio("reloading.mp3");
 const emptyShotAudio = new Audio("empty_shot.mp3");
 
 const cards = ["A", "K", "Q"];
+const changeBulletCount = () => {
+  document.getElementById("bulletCount").innerHTML = `${currentBullet} / 6`;
+};
+
 const reset = () => {
   document.getElementById("random").innerHTML =
     cards[Math.floor(Math.random() * cards.length)];
@@ -45,6 +54,7 @@ const reset = () => {
     }
     document.getElementById("reloadingText").style.display = "none";
   }, 2000); // waiting for the audio to finish
+  changeBulletCount();
 };
 
 const increment = () => {
@@ -73,4 +83,5 @@ const increment = () => {
     }, 500); // waiting for the audio to finish
     emptyShotAudio.play();
   }
+  changeBulletCount();
 };
