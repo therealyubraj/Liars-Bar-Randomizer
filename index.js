@@ -58,14 +58,16 @@ const reset = () => {
 };
 
 const increment = () => {
-  dhukdhukAudio.play();
-  setTimeout(() => _increment(), 3500);
-};
-const _increment = () => {
   if (bulletNumber === currentBullet) {
     return;
   }
-
+  dhukdhukAudio.play();
+  for (const btn of document.getElementsByClassName("nonStart")) {
+    btn.style.display = "none";
+  }
+  setTimeout(() => _increment(), 3500);
+};
+const _increment = () => {
   currentBullet++;
 
   if (bulletNumber === currentBullet) {
@@ -77,15 +79,10 @@ const _increment = () => {
     setTimeout(() => {
       document.getElementById("mainDiv").style.backgroundColor = "white";
     }, 500);
-    for (const btn of document.getElementsByClassName("nonStart")) {
-      btn.style.display = "none";
-    }
-    setTimeout(() => {
-      for (const btn of document.getElementsByClassName("nonStart")) {
-        btn.style.display = "block";
-      }
-    }, 500); // waiting for the audio to finish
     emptyShotAudio.play();
+  }
+  for (const btn of document.getElementsByClassName("nonStart")) {
+    btn.style.display = "block";
   }
   changeBulletCount();
 };
