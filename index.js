@@ -3,6 +3,14 @@ const randomInRange = (min, max) => {
 };
 let bulletNumber = randomInRange(1, 6);
 let currentBullet = 0;
+let currentRotation = 0;
+
+const shotAudio = new Audio("assets/audio/shot.mp3");
+const reloadingAudio = new Audio("assets/audio/reloading.mp3");
+const emptyShotAudio = new Audio("assets/audio/empty_shot.mp3");
+const dhukdhukAudio = new Audio("assets/audio/dhukdhuk.mp3");
+const shuffleAudio = new Audio("assets/audio/shuffle.mp3");
+const chamber = document.getElementById("chamber");
 
 window.onload = () => {
   document.body.style.width = window.innerWidth + "px";
@@ -11,28 +19,29 @@ window.onload = () => {
     0.9 * window.innerHeight + "px";
 };
 
-document.getElementById("startBtn").onclick = async () => {
-  reloadingAudio.play();
-  document.getElementById("startBtn").style.display = "none";
-  setTimeout(() => {
-    for (const btn of document.getElementsByClassName("nonStart")) {
-      btn.style.display = "block";
-    }
-  }, 2000); // waiting for the audio to finish
-};
+// document.getElementById("startBtn").onclick = async () => {
+//   emptyShotAudio.play()
+//   document.getElementById("startBtn").style.display = "none";
+//   for (const btn of document.getElementsByClassName("nonStart")) {
+//     btn.style.display = "block";
+//   }
+// };
 
 document.getElementById("randomCard").onclick = () => {
-  document.getElementById("random").innerHTML = "0_o";
+  let counter = 0
+  shuffleAudio.play();
+  let cardShowInterval = setInterval(() => {
+    let cardImage = document.getElementById("cardImage");
+    cardImage.src = `assets/cards/${cards[counter % cards.length]}.png`;
+    counter++;
+  }, 100)
   setTimeout(() => {
-    document.getElementById("random").innerHTML =
-      cards[Math.floor(Math.random() * cards.length)];
-  }, 500);
+    let cardImage = document.getElementById("cardImage");
+    cardImage.src = `assets/cards/${cards[randomInRange(0, cards.length)]}.png`;
+    clearInterval(cardShowInterval);
+  }, 1000);
 };
 
-const shotAudio = new Audio("shot.mp3");
-const reloadingAudio = new Audio("reloading.mp3");
-const emptyShotAudio = new Audio("empty_shot.mp3");
-const dhukdhukAudio = new Audio("dhukdhuk.mp3");
 
 const cards = ["A", "K", "Q"];
 const changeBulletCount = () => {
@@ -53,6 +62,7 @@ const reset = () => {
       btn.style.display = "block";
     }
     document.getElementById("reloadingText").style.display = "none";
+    document.getElementById("startBtn").style.display = "none";
   }, 2000); // waiting for the audio to finish
   changeBulletCount();
 };
@@ -61,11 +71,14 @@ const increment = () => {
   if (bulletNumber === currentBullet) {
     return;
   }
+  reloadingAudio.play();
   dhukdhukAudio.play();
+  currentRotation += 360 * 3;
+  chamber.style.transform = `rotate(${currentRotation}deg)`;
   for (const btn of document.getElementsByClassName("nonStart")) {
     btn.style.display = "none";
   }
-  setTimeout(() => _increment(), 3500);
+  setTimeout(() => _increment(), 2500);
 };
 const _increment = () => {
   currentBullet++;
