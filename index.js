@@ -4,6 +4,7 @@ const randomInRange = (min, max) => {
 let bulletNumber = randomInRange(1, 6);
 let currentBullet = 0;
 let currentRotation = 0;
+let isShooting = false
 
 const shotAudio = new Audio("assets/audio/shot.mp3");
 const reloadingAudio = new Audio("assets/audio/reloading.mp3");
@@ -68,13 +69,14 @@ const reset = () => {
 };
 
 const increment = () => {
-  if (bulletNumber === currentBullet) {
+  if (bulletNumber === currentBullet || isShooting) {
     return;
   }
   reloadingAudio.play();
   dhukdhukAudio.play();
   currentRotation += 360 * 3;
   chamber.style.transform = `rotate(${currentRotation}deg)`;
+  isShooting = true
   for (const btn of document.getElementsByClassName("nonStart")) {
     btn.style.display = "none";
   }
@@ -91,6 +93,7 @@ const _increment = () => {
     document.getElementById("mainDiv").style.backgroundColor = "green";
     setTimeout(() => {
       document.getElementById("mainDiv").style.backgroundColor = "white";
+      isShooting = false
     }, 500);
     emptyShotAudio.play();
   }
