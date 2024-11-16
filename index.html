@@ -66,11 +66,13 @@
       #startBtn {
         height: 20rem;
       }
-      .shootButton {
+      #shootButton {
+        position: relative;
         border-radius: 50%;
         background: none;
         outline: none;
         border: none;
+        transition: all 2500ms;
       }
       #chamber {
         height: 50rem;
@@ -98,9 +100,10 @@
           <img class="resetImg" src="assets/gui/reset_button.png" alt="reset" />
         </button>
       </div>
+      <!-- <button id="startBtn">START</button> -->
       <div id="bulletCount" style="font-size: 35px">0 / 6</div>
       <div id="reloadingText" style="font-size: xx-large; display: none">Reloading!!</div>
-      <button class="shootButton" onclick="increment()">
+      <button id="shootButton" onclick="increment()">
         <img id="chamber" src="assets/gui/chamber.png" alt="button" />
       </button>
     </div>
