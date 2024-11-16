@@ -11,7 +11,6 @@ const reloadingAudio = new Audio("assets/audio/reloading.mp3");
 const emptyShotAudio = new Audio("assets/audio/empty_shot.mp3");
 const dhukdhukAudio = new Audio("assets/audio/dhukdhuk.mp3");
 const shuffleAudio = new Audio("assets/audio/shuffle.mp3");
-const chamber = document.getElementById("chamber");
 
 window.onload = () => {
   document.body.style.width = window.innerWidth + "px";
@@ -21,12 +20,40 @@ window.onload = () => {
 };
 
 // document.getElementById("startBtn").onclick = async () => {
-//   emptyShotAudio.play()
+//   reloadingAudio.play()
+//   currentRotation += 360 * 2;
+//   chamber.style.transform = `rotate(${currentRotation}deg)`;
 //   document.getElementById("startBtn").style.display = "none";
 //   for (const btn of document.getElementsByClassName("nonStart")) {
 //     btn.style.display = "block";
 //   }
 // };
+const shootButton = document.getElementById("shootButton")
+
+const questionMarkList = []
+
+const positions = [
+  { top: "38%", left: "35.5%" },
+  { top: "61.5%", left: "35.5%" },
+  { top: "73.5%", left: "50%" },
+  { top: "61.5%", left: "65%" },
+  { top: "38%", left: "65%" },
+  { top: "26.5%", left: "50%" },
+]
+for (let i = 0; i < 6; i++) {
+  const questionMark = document.createElement("img")
+  questionMark.src = "assets/gui/question.png"
+  const questionStyle = `
+  width: 150px;
+  position: absolute;
+  top: ${positions[i].top};
+  left: ${positions[i].left};
+  transform: translate(-50%, -50%);
+`
+  questionMark.style.cssText = questionStyle
+  questionMarkList.push(questionMark)
+  shootButton.appendChild(questionMark)
+}
 
 document.getElementById("randomCard").onclick = () => {
   let counter = 0;
@@ -50,10 +77,17 @@ const changeBulletCount = () => {
 
 const reset = () => {
   reloadingAudio.play();
+  isShooting = false
+  currentRotation = 360 * 2;
+  shootButton.style.transform = `rotate(${currentRotation}deg)`;
   bulletNumber = randomInRange(1, 6);
   currentBullet = 0;
   document.getElementById("mainDiv").style.backgroundColor = "white";
   document.getElementById("reloadingText").style.display = "block";
+  for (const questionMark of questionMarkList) {
+    questionMark.src = "assets/gui/question.png"
+    questionMark.style.display = "block"
+  }
   for (const btn of document.getElementsByClassName("nonStart")) {
     btn.style.display = "none";
   }
@@ -71,11 +105,11 @@ const increment = () => {
   if (bulletNumber === currentBullet || isShooting) {
     return;
   }
-  reloadingAudio.play();
+  // reloadingAudio.play();
   dhukdhukAudio.play();
-  currentRotation += 360 * 3;
-  chamber.style.transform = `rotate(${currentRotation}deg)`;
-  isShooting = true;
+  currentRotation += 60;
+  shootButton.style.transform = `rotate(${currentRotation}deg)`;
+  isShooting = true
   for (const btn of document.getElementsByClassName("nonStart")) {
     btn.style.display = "none";
   }
@@ -87,12 +121,14 @@ const _increment = () => {
   if (bulletNumber === currentBullet) {
     // play sound
     document.getElementById("mainDiv").style.backgroundColor = "red";
+    questionMarkList[currentBullet - 1].src = "assets/gui/bullet.png"
     shotAudio.play();
   } else {
     document.getElementById("mainDiv").style.backgroundColor = "green";
     setTimeout(() => {
       document.getElementById("mainDiv").style.backgroundColor = "white";
-      isShooting = false;
+      isShooting = false
+      questionMarkList[currentBullet - 1].style.display = "none"
     }, 500);
     emptyShotAudio.play();
   }
