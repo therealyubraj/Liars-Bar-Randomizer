@@ -99,7 +99,7 @@ const reset = () => {
   isShooting = false;
   currentBullet = 0;
   bulletNumber = randomInRange(1, 6);
-  currentRotation = 360 * 2;
+  currentRotation = 360 * 3;
   shootButton.style.transform = `rotate(${currentRotation}deg)`;
 
   updateGameElements();
