@@ -4,7 +4,7 @@ const randomInRange = (min, max) => {
 let bulletNumber = randomInRange(1, 6);
 let currentBullet = 0;
 let currentRotation = 0;
-let isShooting = false
+let isShooting = false;
 
 const shotAudio = new Audio("assets/audio/shot.mp3");
 const reloadingAudio = new Audio("assets/audio/reloading.mp3");
@@ -29,20 +29,19 @@ window.onload = () => {
 // };
 
 document.getElementById("randomCard").onclick = () => {
-  let counter = 0
+  let counter = 0;
   shuffleAudio.play();
   let cardShowInterval = setInterval(() => {
     let cardImage = document.getElementById("cardImage");
     cardImage.src = `assets/cards/${cards[counter % cards.length]}.png`;
     counter++;
-  }, 100)
+  }, 100);
   setTimeout(() => {
     let cardImage = document.getElementById("cardImage");
     cardImage.src = `assets/cards/${cards[randomInRange(0, cards.length)]}.png`;
     clearInterval(cardShowInterval);
   }, 1000);
 };
-
 
 const cards = ["A", "K", "Q"];
 const changeBulletCount = () => {
@@ -63,7 +62,7 @@ const reset = () => {
       btn.style.display = "block";
     }
     document.getElementById("reloadingText").style.display = "none";
-    document.getElementById("startBtn").style.display = "none";
+    isShooting = false;
   }, 2000); // waiting for the audio to finish
   changeBulletCount();
 };
@@ -76,7 +75,7 @@ const increment = () => {
   dhukdhukAudio.play();
   currentRotation += 360 * 3;
   chamber.style.transform = `rotate(${currentRotation}deg)`;
-  isShooting = true
+  isShooting = true;
   for (const btn of document.getElementsByClassName("nonStart")) {
     btn.style.display = "none";
   }
@@ -93,7 +92,7 @@ const _increment = () => {
     document.getElementById("mainDiv").style.backgroundColor = "green";
     setTimeout(() => {
       document.getElementById("mainDiv").style.backgroundColor = "white";
-      isShooting = false
+      isShooting = false;
     }, 500);
     emptyShotAudio.play();
   }
